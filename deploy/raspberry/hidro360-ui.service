@@ -1,0 +1,47 @@
+[Unit]
+Description=HIDRO360 - Panel web (Flet)
+Documentation=file:///opt/hidro360/docs/INSTALACION.md
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+[Service]
+Type=simple
+User=hidro360
+Group=hidro360
+WorkingDirectory=/opt/hidro360
+EnvironmentFile=/etc/hidro360/hidro360.env
+Environment=PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 HOME=/var/lib/hidro360
+# 0.0.0.0 para que otros equipos de la LAN abran el panel. El canal es HTTP sin cifrar: red local de confianza.
+# El navegador del cliente necesita internet para cargar Flet (CanvasKit/fuentes) y las teselas de OpenStreetMap.
+ExecStart=/opt/hidro360/.venv/bin/python app.py --web --host 0.0.0.0 --port 8501 --sin-navegador
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hidro360-ui
+
+UMask=0027
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/hidro360
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+RestrictNamespaces=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

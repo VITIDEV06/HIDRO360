@@ -1,0 +1,29 @@
+# Metadatos para el despliegue de la API en Vercel (https://vercel.com/docs/functions/runtimes/python).
+# NO es un paquete instalable: el proyecto se ejecuta desde la raiz del repositorio.
+#
+# Por que existe:
+#  1. [tool.vercel] entrypoint: la raiz tiene app.py (interfaz Flet, sin variable `app`). Sin esta linea Vercel
+#     buscaria app.py/main.py/... y podria cargar el archivo equivocado. Apunta a la API FastAPI.
+#  2. dependencies: SOLO lo que necesita la API en la funcion (sin flet, flet-desktop ni pytest) para que el
+#     paquete sea pequeno. Vercel acepta pyproject.toml o requirements.txt como fuente de dependencias.
+#     Mantener esta lista alineada con requirements-servidor.txt (tests/test_despliegue.py lo comprueba).
+#  3. requires-python: Vercel soporta 3.12, 3.13 y 3.14 (docs, consulta 2026-10-17). Se fija 3.13 en .python-version.
+[project]
+name = "hidro360-api"
+version = "0.6.0"
+description = "HIDRO360 - API FastAPI (funcion Vercel); la interfaz Flet se ejecuta aparte"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.9",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "google-genai>=2.0",
+    "websockets>=13,<17",
+    "psycopg[binary]>=3.2",
+    "psycopg-pool>=3.2",
+    "pyjwt[crypto]>=2.9",
+    "httpx>=0.27",
+]
+
+[tool.vercel]
+entrypoint = "api.main:app"

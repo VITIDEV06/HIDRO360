@@ -1,0 +1,8 @@
+# Desarrollo y escritorio (Windows/macOS/Linux): servidor + ventana nativa + pruebas.
+# La Raspberry usa requirements-servidor.txt (sin flet-desktop ni pruebas). Las dependencias de ejecución
+# nuevas (p. ej. flet-map) se añaden en requirements-servidor.txt para que lleguen también al servidor.
+-r requirements-servidor.txt
+flet-desktop~=1.0.4      # ventana de escritorio (python app.py)
+# Pruebas
+pytest>=8
+httpx>=0.27

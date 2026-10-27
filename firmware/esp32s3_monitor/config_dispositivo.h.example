@@ -1,0 +1,36 @@
+// HIDRO360 - configuracion de la TERMINAL DE CISTERNA (ESP32-S3).
+// Copie este archivo a config_dispositivo.h y complete sus valores.
+// config_dispositivo.h NO se versiona (.gitignore). NUNCA suba credenciales ni tokens reales.
+#pragma once
+
+// --- WiFi (2.4 GHz) ---
+#define WIFI_SSID      "NOMBRE_DE_SU_WIFI"
+#define WIFI_PASS      "CLAVE_DE_SU_WIFI"
+
+// --- API (FastAPI) ---
+// Incluya el prefijo /api/v1 y NO termine con "/". Dos modos, segun el esquema:
+//   LAN (Raspberry/PC):  "http://192.168.1.50:8000/api/v1"  -> sin cifrar; el token viaja en claro por la red local.
+//   Publica (HTTPS):     "https://SU-DOMINIO.example/api/v1" -> certificado VALIDADO con el bundle de CAs raiz del
+//                          core ESP32; requiere hora valida (NTP) y salida a Internet (puerto 443 y UDP 123).
+#define API_BASE_URL   "http://192.168.1.50:8000/api/v1"
+// Token DEL VEHICULO (uno por cisterna; se genera al registrar el dispositivo en el servidor).
+// La identidad se deriva del token en el servidor; CISTERNA_ID es solo para mostrar en pantalla.
+#define DEVICE_TOKEN   "CAMBIE_ESTE_TOKEN"
+#define CISTERNA_ID    "CIS-01"
+
+// --- HTTPS (opcional) ---
+// Opcion A (por defecto): bundle de CAs raiz del core. No hace falta definir nada.
+// Opcion B: fijar UNA CA raiz concreta (PEM). Descomente y pegue el certificado RAIZ (no el del servidor):
+// #define API_CA_ROOT_PEM "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----\n"
+// PELIGRO: desactiva la validacion del certificado (cualquiera puede suplantar al servidor y robar el token).
+// Solo laboratorio; con esto activo la pantalla muestra "TLS INSEGURO!" en rojo. NO lo active en un vehiculo.
+// #define API_TLS_INSECURE
+
+// --- Intervalos (milisegundos) ---
+#define MISION_POLL_MS  10000   // sondeo de GET /dispositivo/mision (15000 recomendable con HTTPS: cada peticion hace un handshake)
+#define LATIDO_MS       30000   // POST /dispositivo/latido
+#define HTTP_TIMEOUT_MS  5000   // conexion y lectura en HTTP local (la pantalla no responde al toque durante una peticion)
+#define HTTPS_TIMEOUT_MS 15000  // idem en HTTPS (incluye el handshake TLS)
+#define NTP_ESPERA_MS   15000   // espera de la 1.a sincronizacion de hora antes de mostrar "HORA NO SINCRONIZADA"
+// #define NTP_SERVIDOR_1 "pool.ntp.org"
+// #define NTP_SERVIDOR_2 "time.google.com"

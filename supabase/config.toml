@@ -1,0 +1,21 @@
+# Configuracion MINIMA de Supabase CLI para HIDRO360 (`supabase start`, `supabase db push`, `supabase db reset`).
+# Solo se usa la base de datos: la API REST/Realtime/Studio de Supabase NO forman parte del diseno (el backend se conecta
+# directamente a Postgres; ver docs/BASE_DE_DATOS.md). Los valores de produccion se definen en el panel de Supabase, no aqui.
+project_id = "hidro360"
+
+[api]
+enabled = false          # PostgREST apagado en local: ninguna tabla se expone por REST
+
+[db]
+port = 54322
+major_version = 17
+
+[db.migrations]
+enabled = true           # aplica supabase/migrations/*.sql en orden
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true           # Supabase Auth puede usarse como proveedor de identidad (HIDRO360_AUTH=supabase)

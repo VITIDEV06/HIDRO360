@@ -1,0 +1,16 @@
+# Dependencias para EJECUTAR en servidor (Raspberry Pi / Linux aarch64): UI web + API + Gemini opcional.
+# Fuente única: requirements.txt las incluye con «-r». Añada aquí (no en requirements.txt) toda dependencia de ejecución nueva.
+# NO incluye flet-desktop (ventana nativa, innecesaria en un servidor) ni pytest/httpx (solo pruebas).
+flet~=1.0.4
+flet-web~=1.0.4          # python app.py --web
+flet-map~=1.0.4         # mapas (OpenStreetMap; el navegador del cliente necesita internet para las teselas)
+google-genai>=2.0        # IA opcional (Gemini); sin GEMINI_API_KEY se usa el modo local
+websockets>=13,<17       # google-genai 2.x exige <17; flet tira hacia 17 si no se fija (conflicto en la Pi)
+pydantic>=2.9
+fastapi>=0.110
+uvicorn>=0.29
+psycopg[binary]>=3.2     # PostgreSQL (Supabase); solo se usa si DATABASE_URL esta definida
+psycopg-pool>=3.2
+pyjwt[crypto]>=2.9       # verificacion de JWT de Supabase Auth (HIDRO360_AUTH=supabase)
+httpx>=0.27              # cliente HTTP de ejecucion (Supabase Storage); tambien lo usan las pruebas
+tzdata>=2024.1       # zona horaria America/Panama sin depender del fallback UTC-5 (Windows y Vercel)

@@ -1,0 +1,25 @@
+# Servicio de la INTERFAZ Flet (web). La API sigue en Vercel y la base en Supabase.
+# Flet necesita un proceso Python persistente con WebSockets: no encaja en funciones serverless.
+services:
+  - type: web
+    name: hidro360-ui
+    runtime: python
+    buildCommand: pip install -r requirements-servidor.txt
+    startCommand: python app.py --web --host 0.0.0.0 --port $PORT --sin-navegador
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13"
+      - key: HIDRO360_ENV
+        value: prod
+      - key: DATABASE_URL
+        sync: false
+      - key: HIDRO360_UI_URL
+        sync: false   # URL pública de este servicio (p. ej. https://hidro360-ui.onrender.com)
+      - key: SUPABASE_URL
+        value: https://qnufqmzsolxznbvotjqm.supabase.co
+      - key: HIDRO360_STORAGE
+        value: supabase
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

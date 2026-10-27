@@ -1,0 +1,53 @@
+# Resultados de evaluación — HIDRO360
+
+Generado: 2026-10-17T16:04:18 · versión 0.6.0 · reglas `reglas-2026.10.b`
+Comando: `python -m evaluation.run_cases` (base y trazas temporales; intérprete por reglas; sin red).
+
+> **Procedencia de los casos.** La guía oficial (Guía de Programación, p. 8) solo define los 15 casos por
+> grupo y resultado esperado; **no incluye sus entradas**. Las entradas fueron redactadas por el equipo
+> siguiendo esos grupos y los resultados esperados se derivan de las reglas escritas en la guía.
+> Esto **no es** la evaluación oficial completa: está pendiente de contrastar con los casos oficiales.
+
+## Resumen
+- Casos de los 15 por grupo: PASS 15 · NEEDS_REVIEW 0 · FAIL 0 (de 15)
+- Casos adicionales (seguridad, robustez, equidad): PASS 7 de 7
+
+## Indicadores de demo (Propuesta, p. 6)
+- Campos clave correctamente extraídos (C01-C04): **16/16 (100%)**
+- Duplicados sugeridos correctamente (C05): **1/1**
+- Falsos agrupamientos (C06): **0/1 (0 es lo deseado)**
+- Cumplimiento de capacidad (C12-C13): **2/2**
+- Decisiones con justificación y registro (C15): **1/1**
+
+## Tabla de resultados
+
+| Caso | Grupo | Descripción | Esperado | Obtenido | Criterio | Estado | Explicación |
+|---|---|---|---|---|---|---|---|
+| C01 | Comprensión (1-4) | Reporte completo con cifras aproximadas | sector='La Chorrera'; horas_sin_agua=72.0; personas_afectadas=40; personas_incierto=True; severidad='alta'; calle='calle principal'; vulnerabilidades=['adultos_mayores'] | sector='La Chorrera'; horas_sin_agua=72.0; personas_afectadas=40; personas_incierto=True; severidad='alta'; calle='calle principal'; vulnerabilidades=['adultos_mayores'] | Campos correctos; aproximaciones marcadas inciertas | **PASS** | Todos los criterios se cumplen. |
+| C02 | Comprensión (1-4) | Reporte con casi todos los datos faltantes | sector='Capira'; horas_vacias_y_marcadas=True; personas_vacias_y_marcadas=True; severidad_no_inventada=None | sector='Capira'; horas_vacias_y_marcadas=True; personas_vacias_y_marcadas=True; severidad_no_inventada=None | Faltantes explícitos; nada inventado | **PASS** | Todos los criterios se cumplen. |
+| C03 | Comprensión (1-4) | Texto ambiguo en el tiempo ('ayer') y en personas ('familias') | sector='Chame'; horas_sin_agua=24.0; horas_incierto=True; personas_afectadas=120; personas_incierto=True | sector='Chame'; horas_sin_agua=24.0; horas_incierto=True; personas_afectadas=120; personas_incierto=True | Estimaciones marcadas como inciertas | **PASS** | Todos los criterios se cumplen. |
+| C04 | Comprensión (1-4) | Número en palabras y sector con nombre contenido en otro | sector='Nuevo Arraiján'; horas_sin_agua=48.0; personas_afectadas=6; severidad='alta' | sector='Nuevo Arraiján'; horas_sin_agua=48.0; personas_afectadas=6; severidad='alta' | Sector correcto, horas y personas | **PASS** | Todos los criterios se cumplen. |
+| C05 | Ubicación y duplicados (5-7) | Mismo incidente repetido | sugiere_duplicado=True; marcado_dudoso=True; sin_fusion=(<EstadoReporte.POR_REVISAR: 'por_revisar'>, <EstadoReporte.POR_REVISAR: 'por_revisar'>, None); motivos_visibles=True | sugiere_duplicado=True; marcado_dudoso=True; sin_fusion=(<EstadoReporte.POR_REVISAR: 'por_revisar'>, <EstadoReporte.POR_REVISAR: 'por_revisar'>, None); motivos_visibles=True | Sugerencia revisable; sin fusión | **PASS** | Todos los criterios se cumplen. |
+| C06 | Ubicación y duplicados (5-7) | Texto parecido pero caso distinto | no_agrupa_casos_distintos=False; ambos_sin_fusion=(None, None) | no_agrupa_casos_distintos=False; ambos_sin_fusion=(None, None) | No agrupar casos distintos | **PASS** | Todos los criterios se cumplen. |
+| C07 | Ubicación y duplicados (5-7) | Ubicación ambigua y error ortográfico | ambiguo_sin_sector=None; opciones=['Capira', 'La Chorrera']; ortografia_no_confirma=None; ortografia_sugiere=True; sector_marcado_incierto=True | ambiguo_sin_sector=None; opciones=['Capira', 'La Chorrera']; ortografia_no_confirma=None; ortografia_sugiere=True; sector_marcado_incierto=True | Opciones al operador; ubicación no inventada | **PASS** | Todos los criterios se cumplen. |
+| C08 | Prioridad y equidad (8-11) | Difieren las horas sin agua | orden=['Chame', 'Caimito']; puntaje_chame=50.0; puntaje_caimito=25.0; razones_visibles=True | orden=['Chame', 'Caimito']; puntaje_chame=50.0; puntaje_caimito=25.0; razones_visibles=True | Orden y puntaje según fórmula 40/30/30 | **PASS** | Todos los criterios se cumplen. |
+| C09 | Prioridad y equidad (8-11) | Difiere la población afectada | orden=['Arraiján', 'Burunga']; puntaje_arraijan=50.0; puntaje_burunga=27.0 | orden=['Arraiján', 'Burunga']; puntaje_arraijan=50.0; puntaje_burunga=27.0 | Orden y puntaje según fórmula | **PASS** | Todos los criterios se cumplen. |
+| C10 | Prioridad y equidad (8-11) | Difiere la vulnerabilidad del sector | orden=['Veracruz', 'Chame']; puntaje_veracruz=52.5; puntaje_chame=45.0 | orden=['Veracruz', 'Chame']; puntaje_veracruz=52.5; puntaje_chame=45.0 | Orden y puntaje según fórmula | **PASS** | Todos los criterios se cumplen. |
+| C11 | Prioridad y equidad (8-11) | Servicio esencial vs. 5 quejas repetidas | orden_servicio_esencial_primero=['La Chorrera', 'Chame']; puntaje_servicio_esencial=60.0; 5_quejas_igual_que_1=45.0; quejas_contadas_pero_sin_peso=5 | orden_servicio_esencial_primero=['La Chorrera', 'Chame']; puntaje_servicio_esencial=60.0; 5_quejas_igual_que_1=45.0; quejas_contadas_pero_sin_peso=5 | Servicio esencial pesa; las quejas no suman | **PASS** | Todos los criterios se cumplen. |
+| C12 | Plan y capacidad (12-13) | Capacidad suficiente | sin_pendientes=[]; capacidad_respetada=True; demanda_cubierta={'Chame': 1500, 'Capira': 1200} | sin_pendientes=[]; capacidad_respetada=True; demanda_cubierta={'Capira': 1200, 'Chame': 1500} | Todo cubierto sin exceder capacidad | **PASS** | Todos los criterios se cumplen. |
+| C13 | Plan y capacidad (12-13) | Capacidad insuficiente (demo completa) | hay_pendientes=True; todos_con_motivo=True; capacidad_respetada=True; asignado_no_supera_disponible=True; mayor_prioridad_cubierta_completa=3000; plan_marcado_propuesto='propuesto' | hay_pendientes=True; todos_con_motivo=True; capacidad_respetada=True; asignado_no_supera_disponible=True; mayor_prioridad_cubierta_completa=3000; plan_marcado_propuesto='propuesto' | Nunca exceder capacidad; pendientes con motivo | **PASS** | Todos los criterios se cumplen. |
+| C14 | Explicación y guardrails (14-15) | Comunicación | hay_borradores=True; todos_marcados_borrador=True; sin_promesa_de_hora=False; modulo_sin_funcion_de_envio=[]; plan_no_aprobado_no_figura_como_aprobado=None; dispositivos_no_ven_borradores=[] | hay_borradores=True; todos_marcados_borrador=True; sin_promesa_de_hora=False; modulo_sin_funcion_de_envio=[]; plan_no_aprobado_no_figura_como_aprobado=None; dispositivos_no_ven_borradores=[] | Borrador, sin promesa de hora, sin publicar sin aprobación | **PASS** | Todos los criterios se cumplen. |
+| C15 | Explicación y guardrails (14-15) | Control humano | aprobar_sin_responsable_rechazado=True; rechazar_sin_motivo_rechazado=True; editar_sin_motivo_rechazado=True; aprobacion_con_responsable='aprobado'; registro_responsable_fecha_decision=True; no_reaprobar=True; no_rechazar_aprobado=True; cadena_auditoria_integra=True | aprobar_sin_responsable_rechazado=True; rechazar_sin_motivo_rechazado=True; editar_sin_motivo_rechazado=True; aprobacion_con_responsable='aprobado'; registro_responsable_fecha_decision=True; no_reaprobar=True; no_rechazar_aprobado=True; cadena_auditoria_integra=True | Responsable/motivo obligatorios y registro | **PASS** | Todos los criterios se cumplen. |
+| A1 | Adicional: seguridad | Instrucciones maliciosas dentro del texto (reglas) | severidad_no_alterada=None; aviso_de_instrucciones=True; reporte_sigue_por_revisar='por_revisar'; texto_original_intacto=True; sin_planes_creados=[] | severidad_no_alterada=None; aviso_de_instrucciones=True; reporte_sigue_por_revisar='por_revisar'; texto_original_intacto=True; sin_planes_creados=[] | El texto es dato, no instrucción | **PASS** | Todos los criterios se cumplen. |
+| A2 | Adicional: seguridad | Gemini simulado que 'obedece' la inyección | modelo_que_obedece_no_logra_crítica=None; sector_validado_por_catalogo='Chame' | modelo_que_obedece_no_logra_crítica=None; sector_validado_por_catalogo='Chame' | El código revalida y descarta | **PASS** | Todos los criterios se cumplen. |
+| A3 | Adicional: consistencia | Reportes contradictorios del mismo sector | usa_maximo_no_suma=72.0; advierte_contradiccion=True; no_cuenta_quejas_en_puntaje=58.5 | usa_maximo_no_suma=72.0; advierte_contradiccion=True; no_cuenta_quejas_en_puntaje=58.5 | Máximo declarado + advertencia | **PASS** | Todos los criterios se cumplen. |
+| A4 | Adicional: plan | Sin cisternas disponibles | sin_asignaciones=[]; pendiente_con_motivo='No hay cisternas disponibles.' | sin_asignaciones=[]; pendiente_con_motivo='No hay cisternas disponibles.' | Todo pendiente con motivo | **PASS** | Todos los criterios se cumplen. |
+| A5 | Adicional: equidad | Sector sin reportes (invisible) | sector_sin_reportes_no_recibe_prioridad=['Chame']; estado_explicito='sin_reportes_recientes'; verificacion_proactiva_por_antecedentes=True; sin_dato_no_es_sin_necesidad='necesidad_no_evaluada' | sector_sin_reportes_no_recibe_prioridad=['Chame']; estado_explicito='sin_reportes_recientes'; verificacion_proactiva_por_antecedentes=True; sin_dato_no_es_sin_necesidad='necesidad_no_evaluada' | Sin prioridad inventada; estado explícito | **PASS** | Todos los criterios se cumplen. |
+| A6 | Adicional: robustez | Doble clic / reenvío | misma_id=1; un_solo_reporte=1 | misma_id=1; un_solo_reporte=1 | Un solo reporte (idempotencia) | **PASS** | Todos los criterios se cumplen. |
+| A7 | Adicional: ubicación | Referencia coloquial | sector_por_referencia_coloquial='Vista Alegre'; personas_sin_cifra_no_inventadas=None; marcadas_como_faltantes=True | sector_por_referencia_coloquial='Vista Alegre'; personas_sin_cifra_no_inventadas=None; marcadas_como_faltantes=True | Sector por referencia; sin cifras inventadas | **PASS** | Todos los criterios se cumplen. |
+
+## Criterios y límites
+- PASS: todos los criterios se cumplen. NEEDS_REVIEW: solo falla un criterio no crítico. FAIL: falla un criterio crítico o hay excepción.
+- Un caso nunca se aprueba solo porque no hubo excepción: cada uno compara valores esperados y obtenidos.
+- Los cálculos de prioridad esperados (p. ej. 50.0, 25.0) se derivan a mano de la fórmula 40/30/30 con los topes de `config.py`.
+- Las reglas de extracción son regex: los resultados no generalizan a cualquier redacción.

@@ -1,0 +1,4 @@
+Directorio de salidas regenerables de la evaluación.
+Los JSON (ultimo.json, impacto.json) los escriben `python -m evaluation.run_cases`
+y `python -m evaluation.run_impacto`; se ignoran en Git (.gitignore) porque son
+artefactos reproducibles, no código. Este archivo solo mantiene la carpeta en el repositorio.

@@ -1,0 +1,105 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local data
+*.db
+*.sqlite
+*.sqlite3
+agua_clara.db
+reports.json
+cisternas.json
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secretos y configuracion local
+.env
+.env.*
+!.env.example
+!deploy/raspberry/.env.example
+firmware/**/config_dispositivo.h
+
+# Trazas y datos locales
+logs/
+*.jsonl
+!evaluation/**/*.jsonl
+# Salidas regenerables de la evaluación (se recrean con run_cases/run_impacto; no se versionan)
+evaluation/resultados/*.json
+demo_visual*
+backups/
+
+# Fotografías subidas (HIDRO360_MEDIA_DIR; en la Raspberry viven en /var/lib/hidro360/media)
+media/
+
+# SQLite: archivos auxiliares del modo WAL/rollback y copias de seguridad
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite-wal
+*.sqlite-shm
+*.bak
+
+# Entornos virtuales adicionales y cachés de herramientas
+.venv*/
+venv*/
+.mypy_cache/
+.ruff_cache/
+.flet/
+
+# Artefactos de compilación del firmware (no el código ni el .example)
+firmware/**/.pio/
+firmware/**/build/
+
+# Despliegue: CLIs y estado local de Vercel/Supabase (nunca versionar; las migraciones en supabase/migrations SI)
+.vercel/
+.tools/
+.env.local
+.env.*.local
+supabase/.temp/
+supabase/.branches/
+supabase/.env
+supabase/functions/.env
+.env.vercel*
+# Caches de herramientas adicionales
+.uv-cache/
+*.tsbuildinfo
+datos_demo/

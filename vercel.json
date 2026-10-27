@@ -1,0 +1,22 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["iad1"],
+  "functions": {
+    "api/main.py": {
+      "maxDuration": 90,
+      "excludeFiles": "{tests/**,docs/**,interface/**,evaluation/**,firmware/**,deploy/**,scripts/**,assets/**,media/**,logs/**,proyecto_info/**,.claude/**,**/*.db,**/*.md}"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "no-referrer" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" },
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}
